@@ -108,7 +108,9 @@ Param (
 [string] $debug
 )
 $credPair = "$($nxUser):$($nxPassword)"
-$encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($credPair))
+#$encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($credPair))
+$encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($credPair))
+
 $headers = @{ Authorization = "Basic $encodedCredentials" }
 $URL = "https://$($nxIP):9440/api/nutanix/v3/hosts/list"
 $Payload = @{
@@ -139,7 +141,9 @@ Param (
 [string] $debug
 )
 $credPair = "$($nxUser):$($nxPassword)"
-$encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($credPair))
+#$encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($credPair))
+$encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($credPair))
+
 $headers = @{ Authorization = "Basic $encodedCredentials" }
 write-log -message "Executing VM List Query"
 $URL = "https://$($nxIP):9440/api/nutanix/v3/vms/list"
@@ -172,7 +176,8 @@ Param (
 [string] $debug
 )
 $credPair = "$($nxUser):$($nxPassword)"
-$encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($credPair))
+#$encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($credPair))
+$encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($credPair))
 $headers = @{ Authorization = "Basic $encodedCredentials" }
 $URL = "https://$($nxIP):9440/api/nutanix/v3/vms/$($uuid)"
 try {
@@ -190,7 +195,9 @@ Param (
 [string] $debug
 )
 $credPair = "$($nxUser):$($nxPassword)"
-$encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($credPair))
+#$encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($credPair))
+$encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($credPair))
+
 $headers = @{ Authorization = "Basic $encodedCredentials" }
 $URL = "https://$($nxIP):9440/api/nutanix/v3/hosts/$($uuid)"
 try {
@@ -305,4 +312,3 @@ write-log -message "Cluster information has been written to the CSV file: $Clust
 # Disconnecting from the Nutanix Cluster
 write-log -message "Closing the connection to the Nutanix cluster $($nxIP)"
 write-log -message "Processing Complete"
-

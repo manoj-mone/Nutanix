@@ -15,12 +15,12 @@ PS C:\PSScript > .\Nutanix_Inventory_Script_api.ps1
 None.  You cannot pipe objects to this script.
 .OUTPUTS
 No objects are output from this script.  
-This script creates three CSV file.
+This script creates three CSV files.
 .NOTES
 NAME: Nutanix_Inventory_Script_api.ps1
 VERSION: 1.0
 Author: Manoj Mone, Nutanix
-Complete API based inventory rendering. Based on an original Cmdlet based script written by: Kees Baggerman
+Complete API based inventory rendering. New code based on an original Cmdlet based script written by: Kees Baggerman
 Created On: June 25, 2021
 LASTEDIT: June 28, 2021
 #>

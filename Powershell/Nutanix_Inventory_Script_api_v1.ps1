@@ -15,14 +15,14 @@ PS C:\PSScript > .\Nutanix_Inventory_Script_api.ps1
 None.  You cannot pipe objects to this script.
 .OUTPUTS
 No objects are output from this script.  
-This script creates three CSV files.
+This script creates three CSV file.
 .NOTES
 NAME: Nutanix_Inventory_Script_api.ps1
 VERSION: 1.0
 Author: Manoj Mone, Nutanix
-Complete API based inventory rendering. New code based on an original Cmdlet based script written by: Kees Baggerman
+Complete API based inventory rendering. Based on an original Cmdlet based script written by: Kees Baggerman
 Created On: June 25, 2021
-LASTEDIT: June 28, 2021
+LASTEDIT: July 8, 2021
 #>
 
 # Setting parameters for the connection
@@ -92,7 +92,10 @@ Function Get-Clusters {
     $task = Invoke-RestMethod -Uri $URL -method "post" -body $JSON -ContentType 'application/json' -headers $headers;
     }
     catch {
-        write-log -message "Error - Unable to retrive information from Cluster API"
+        $saved_error = $_.Exception.Message
+        write-log -message "Error - Please check your credentials - $($saved_error)"
+        exit
+
     }
     write-log -message "We found $($task.entities.count) clusters in this Prism Central."
     Return $task
@@ -108,8 +111,8 @@ Param (
 [string] $debug
 )
 $credPair = "$($nxUser):$($nxPassword)"
-#$encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($credPair))
-$encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($credPair))
+$encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($credPair))
+#$encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($credPair))
 
 $headers = @{ Authorization = "Basic $encodedCredentials" }
 $URL = "https://$($nxIP):9440/api/nutanix/v3/hosts/list"
@@ -141,8 +144,8 @@ Param (
 [string] $debug
 )
 $credPair = "$($nxUser):$($nxPassword)"
-#$encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($credPair))
-$encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($credPair))
+$encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($credPair))
+#$encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($credPair))
 
 $headers = @{ Authorization = "Basic $encodedCredentials" }
 write-log -message "Executing VM List Query"
@@ -176,8 +179,8 @@ Param (
 [string] $debug
 )
 $credPair = "$($nxUser):$($nxPassword)"
-#$encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($credPair))
-$encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($credPair))
+$encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($credPair))
+#$encodedCredentials = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($credPair))
 $headers = @{ Authorization = "Basic $encodedCredentials" }
 $URL = "https://$($nxIP):9440/api/nutanix/v3/vms/$($uuid)"
 try {
@@ -312,3 +315,4 @@ write-log -message "Cluster information has been written to the CSV file: $Clust
 # Disconnecting from the Nutanix Cluster
 write-log -message "Closing the connection to the Nutanix cluster $($nxIP)"
 write-log -message "Processing Complete"
+
